@@ -1,15 +1,14 @@
-import '../styles/main.scss';
+import "../styles/main.scss";
 
-import Link from 'next/link';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import Link from "next/link";
+
+import Layout from "../layouts/main";
+import Game from "../components/game";
 
 export default () => (
-	<div className="sg-main">
-		<div className="sg-main__content">
-			<Header/>
-		</div>
-
-		<Footer />
-	</div>
+  <Layout>
+    <div className="container">
+      <Game gameLength={1} />
+    </div>
+  </Layout>
 );
