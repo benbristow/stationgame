@@ -8,8 +8,9 @@ import GameViewAnswer from "./gameViews/answer";
 import GameViewEnd from "./gameViews/end";
 
 class Game extends Component {
-  componentWillMount() {
-    this.setState(this.freshState());
+  constructor(props) {
+    super(props);
+    this.state = this.freshState();
   }
 
   freshState = () => {
@@ -55,7 +56,7 @@ class Game extends Component {
     const { gameLength } = this.props;
     const { view, currentIndex, deck, choice, score } = this.state;
 
-    return (
+    return deck.length ? (
       <div className="sg-game">
         {view === "choose" && (
           <GameViewChoose
@@ -82,7 +83,7 @@ class Game extends Component {
           />
         )}
       </div>
-    );
+    ) : null;
   }
 }
 
