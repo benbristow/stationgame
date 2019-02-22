@@ -8,7 +8,7 @@ import Game from "../components/game";
 export default () => (
   <Layout>
     <div className="container">
-      <Game gameLength={1} />
+      <Game gameLength={10} />
     </div>
   </Layout>
 );
