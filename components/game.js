@@ -22,6 +22,10 @@ class Game extends Component {
     this.state = this.getFreshState();
   }
 
+  componentDidUpdate() {
+    this.refs.top.scrollTo(0, 0);
+  }
+
   getFreshState = () => {
     const { gameLength } = this.props;
 
@@ -82,6 +86,7 @@ class Game extends Component {
 
     return deck.length ? (
       <div className="sg-game">
+        <a ref="top" />
         {view === "choose" && (
           <GameViewChoose
             onChangeSelected={this.selectAnswer}

@@ -19,7 +19,6 @@ export default props => (
       required
       onChange={props.onChangeSelected}
       autoFocus
-      menuPlacement="top"
       placeholder="Search for a station"
       styles={selectStyles}
       options={props.stations.map((station, index) => {
