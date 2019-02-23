@@ -54,12 +54,13 @@ h6 {
 .sg-footer {
   background: $dark;
   color: $white;
-  margin-top: 2.4rem;
+  margin-top: 3.8rem;
   font-size: 0.8rem;
   padding: 0.8rem 0rem;
 }
 
 .sg-game {
+  min-height: 400px;
   text-align: center;
 
   &__state {
@@ -68,7 +69,17 @@ h6 {
 
   &__crs {
     font-weight: bold;
-    font-size: 7rem;
+    font-size: 6rem;
     text-align: center;
+  }
+
+  &__outcome {
+    &--correct {
+      color: $success;
+    }
+
+    &--incorrect {
+      color: $danger;
+    }
   }
 }

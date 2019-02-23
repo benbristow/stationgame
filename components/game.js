@@ -8,24 +8,36 @@ import GameViewAnswer from "./gameViews/answer";
 import GameViewEnd from "./gameViews/end";
 
 class Game extends Component {
+  defaultState = {
+    deck: [],
+    filteredStations: [],
+    view: "choose",
+    currentIndex: 0,
+    score: 0,
+    choice: {}
+  };
+
   constructor(props) {
     super(props);
-    this.state = this.freshState();
+    this.state = this.getFreshState();
   }
 
-  freshState = () => {
+  getFreshState = () => {
+    const { gameLength } = this.props;
+
+    const deck = sampleSize(Stations, gameLength);
     return {
-      deck: sampleSize(Stations, this.props.gameLength),
-      view: "choose",
-      currentIndex: 0,
-      score: 0,
-      choice: {}
+      ...this.defaultState,
+      deck: deck,
+      filteredStations: Stations.filter(
+        station => station.name[0] === deck[0].name[0]
+      )
     };
   };
 
   selectAnswer = option => {
-    const { currentIndex, deck, score } = this.state;
-    const choiceStation = Stations[option.value];
+    const { currentIndex, filteredStations, deck, score } = this.state;
+    const choiceStation = filteredStations[option.value];
     const answerStation = deck[currentIndex];
 
     this.setState({
@@ -37,13 +49,18 @@ class Game extends Component {
 
   nextStation = () => {
     const { gameLength } = this.props;
-    const { currentIndex } = this.state;
+    const { currentIndex, deck } = this.state;
 
     if (currentIndex + 1 < gameLength) {
+      const nextStation = deck[currentIndex + 1];
+
       this.setState({
         view: "choose",
         currentIndex: currentIndex + 1,
-        choice: {}
+        choice: {},
+        filteredStations: Stations.filter(
+          station => station.name[0] === nextStation.name[0]
+        )
       });
     } else {
       this.setState({
@@ -54,7 +71,14 @@ class Game extends Component {
 
   render() {
     const { gameLength } = this.props;
-    const { view, currentIndex, deck, choice, score } = this.state;
+    const {
+      view,
+      currentIndex,
+      filteredStations,
+      deck,
+      choice,
+      score
+    } = this.state;
 
     return deck.length ? (
       <div className="sg-game">
@@ -65,21 +89,21 @@ class Game extends Component {
             selected={choice}
             answer={deck[currentIndex]}
             gameLength={gameLength}
-            stations={Stations}
+            stations={filteredStations}
           />
         )}
         {view === "answer" && (
           <GameViewAnswer
             onContinue={this.nextStation}
             answer={deck[currentIndex]}
-            choice={Stations[choice.value]}
+            choice={filteredStations[choice.value]}
           />
         )}
         {view === "end" && (
           <GameViewEnd
             score={score}
             total={gameLength}
-            onPlayAgain={() => this.setState(this.freshState())}
+            onPlayAgain={() => this.setState(this.getFreshState())}
           />
         )}
       </div>
