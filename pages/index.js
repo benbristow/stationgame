@@ -1,11 +1,13 @@
 import "../styles/main.scss";
 
-import Layout from "../layouts/main";
-
 import Link from "next/link";
+
+import Layout from "../layouts/main";
+import Header from "../components/header";
 
 export default () => (
   <Layout>
+    <Header />
     <div className="container">
       <h3>
         There are over 2,500 railway stations on the British National Rail
