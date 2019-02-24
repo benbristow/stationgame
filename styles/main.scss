@@ -69,6 +69,10 @@ h6 {
   margin-top: 3.8rem;
   font-size: 0.8rem;
   padding: 0.8rem 0rem;
+
+  a {
+    color: darken($white, 30%);
+  }
 }
 
 .sg-game {

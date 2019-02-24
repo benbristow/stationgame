@@ -1,5 +1,6 @@
 import "../styles/main.scss";
 
+import Head from "next/head";
 import Link from "next/link";
 
 import Layout from "../layouts/main";
@@ -7,6 +8,9 @@ import Header from "../components/header";
 
 export default () => (
   <Layout>
+    <Head>
+      <title>Station Game</title>
+    </Head>
     <Header />
     <div className="container">
       <h3>

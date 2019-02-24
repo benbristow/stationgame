@@ -84,34 +84,38 @@ class Game extends Component {
       score
     } = this.state;
 
-    return deck.length ? (
-      <div className="sg-game">
-        {view === "choose" && (
-          <GameViewChoose
-            onChangeSelected={this.selectAnswer}
-            currentIndex={currentIndex}
-            selected={choice}
-            answer={deck[currentIndex]}
-            gameLength={gameLength}
-            stations={filteredStations}
-          />
+    return (
+      <Fragment>
+        {deck.length && (
+          <div className="sg-game">
+            {view === "choose" && (
+              <GameViewChoose
+                onChangeSelected={this.selectAnswer}
+                currentIndex={currentIndex}
+                selected={choice}
+                answer={deck[currentIndex]}
+                gameLength={gameLength}
+                stations={filteredStations}
+              />
+            )}
+            {view === "answer" && (
+              <GameViewAnswer
+                onContinue={this.nextStation}
+                answer={deck[currentIndex]}
+                choice={filteredStations[choice.value]}
+              />
+            )}
+            {view === "end" && (
+              <GameViewEnd
+                score={score}
+                total={gameLength}
+                onPlayAgain={() => this.setState(this.getFreshState())}
+              />
+            )}
+          </div>
         )}
-        {view === "answer" && (
-          <GameViewAnswer
-            onContinue={this.nextStation}
-            answer={deck[currentIndex]}
-            choice={filteredStations[choice.value]}
-          />
-        )}
-        {view === "end" && (
-          <GameViewEnd
-            score={score}
-            total={gameLength}
-            onPlayAgain={() => this.setState(this.getFreshState())}
-          />
-        )}
-      </div>
-    ) : null;
+      </Fragment>
+    );
   }
 }
 
