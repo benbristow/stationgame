@@ -14,7 +14,7 @@ export default () => (
     </Head>
     <Header small />
     <div className="container">
-      <Game gameLength={10} />
+      <Game gameLength={20} />
     </div>
   </Layout>
 );
