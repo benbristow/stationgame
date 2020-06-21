@@ -2,7 +2,7 @@
 	"name": "stationgame",
 	"scripts": {
 		"dev": "next",
-		"build": "next build && next export",
+		"build": "next build",
 		"start": "next start -p $PORT"
 	},
 	"dependencies": {
