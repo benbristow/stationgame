@@ -1,20 +1,26 @@
-name: main
+name: Deploy to Azure Storage
+
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+  [push]
+
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
         with:
-            fetch-depth: 0
-      - id: deploy
-        name: Deploy to dokku
-        uses: idoberko2/dokku-deploy-github-action@v1
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - run: npm run build
+      
+      - name: Azure Blob Storage Upload
+        uses: bacongobbler/azure-blob-storage-upload@v1.1.0
         with:
-            ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-            dokku-host: 'benbristow.co.uk'
-            app-name: 'stationgame'
+          connection_string: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
+          container_name: '$web'
+          source_dir: 'build'
+          sync: true
